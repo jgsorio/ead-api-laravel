@@ -16,7 +16,9 @@ class CreateSupportsTable extends Migration
         Schema::create('supports', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('lesson_id')->nullable(false);
+            $table->uuid('user_id')->nullable(false);
             $table->enum('status', ['A', 'P', 'C'])->default('P'); //P pendente, A aguardando resposta, C concluido
+            $table->text('description');
             $table->timestamps();
         });
     }

@@ -14,4 +14,9 @@ class Lesson extends Model
     protected $keyType = 'uuid';
 
     protected $fillable = ['name', 'description', 'module_id', 'url', 'video'];
+
+    public function support()
+    {
+        return $this->hasMany(Support::class);
+    }
 }

@@ -13,5 +13,21 @@ class Support extends Model
     public $incrementing = false;
     protected $keyType = 'uuid';
 
-    protected $fillable = ['lesson_id', 'status', 'description'];
+    protected $fillable = ['lesson_id', 'user_id', 'status', 'description'];
+
+    public $statusOptions = [
+        'A' => 'Aguardando Professor',
+        'P' => 'Pendente Professor',
+        'C' => 'Concluído'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
 }
