@@ -34,6 +34,16 @@ class SupportRepository
             ->get();
     }
 
+    public function storeSupport(array $data): Support
+    {
+        return $this->entity->create([
+            'lesson_id' => $data['lesson'],
+            'user_id' => $this->getAuthUser()['id'],
+            'description' => $data['description'],
+            'status' => $data['status']
+        ]);
+    }
+
     private function getAuthUser()
     {
         return User::where('id', 'd33e7c7d-07c7-4b92-8079-4f3f7a4ceae9')->first();
