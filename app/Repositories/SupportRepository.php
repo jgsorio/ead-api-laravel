@@ -44,6 +44,18 @@ class SupportRepository
         ]);
     }
 
+    public function storeReplyToSupportId(string $supportId, array $data)
+    {
+        return $this->getSupport($supportId)
+            ->replies()
+            ->create($data);
+    }
+
+    private function getSupport(string $supportId)
+    {
+        return $this->entity->firstOrFail($supportId);
+    }
+
     private function getAuthUser()
     {
         return User::where('id', 'd33e7c7d-07c7-4b92-8079-4f3f7a4ceae9')->first();

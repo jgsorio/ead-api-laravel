@@ -14,7 +14,10 @@ class CreateReplySupportsTable extends Migration
     public function up()
     {
         Schema::create('reply_supports', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->uuid('support_id')->nullable(false);
+            $table->uuid('user_id')->nullable(false);
+            $table->text('description');
             $table->timestamps();
         });
     }
