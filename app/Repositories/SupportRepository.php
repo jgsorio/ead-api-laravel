@@ -31,14 +31,17 @@ class SupportRepository
                     $query->where('status', 'like',  "%{$filters['description']}%");
                 }
             })
+            ->orderBy('updated_at')
             ->get();
     }
 
     public function storeSupport(array $data): Support
     {
+        $user = $this->getAuthUser();
+
         return $this->entity->create([
             'lesson_id' => $data['lesson'],
-            'user_id' => $this->getAuthUser()['id'],
+            'user_id' => $user->id,
             'description' => $data['description'],
             'status' => $data['status']
         ]);
@@ -46,18 +49,23 @@ class SupportRepository
 
     public function storeReplyToSupportId(string $supportId, array $data)
     {
+        $user = $this->getAuthUser();
+
         return $this->getSupport($supportId)
             ->replies()
-            ->create($data);
+            ->create([
+                'description' => $data['description'],
+                'user_id' => $user->id
+            ]);
     }
 
     private function getSupport(string $supportId)
     {
-        return $this->entity->firstOrFail($supportId);
+        return $this->entity->where('id', $supportId)->first();
     }
 
     private function getAuthUser()
     {
-        return User::where('id', 'd33e7c7d-07c7-4b92-8079-4f3f7a4ceae9')->first();
+        return User::where('id', '8bfcfa03-8855-4c31-ab80-a0265a255a7d')->first();
     }
 }

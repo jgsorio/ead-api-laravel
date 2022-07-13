@@ -14,4 +14,16 @@ class ReplySupport extends Model
     public $keyType = 'uuid';
 
     protected $fillable = ['description', 'support_id', 'user_id'];
+
+    protected $touches = ['support']; // Atualiza os timestamps sempre que houver alguma alteração
+
+    public function support()
+    {
+        return $this->belongsTo(Support::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
