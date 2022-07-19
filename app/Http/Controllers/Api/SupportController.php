@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreReplySupport;
 use App\Http\Requests\StoreSupport;
-use App\Http\Resources\ReplySupportResource;
 use App\Http\Resources\SupportResource;
 use App\Repositories\SupportRepository;
 use Exception;
@@ -32,17 +30,6 @@ class SupportController extends Controller
             $support = $this->repository->storeSupport($request->validated());
             return new SupportResource($support);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage(), 3);
-        }
-    }
-
-    public function createReply(StoreReplySupport $request, string $id)
-    {
-        try {
-            $reply = $this->repository->storeReplyToSupportId($id, $request->validated());
-            return new ReplySupportResource($reply);
-        } catch (Exception $e)
-        {
             throw new Exception($e->getMessage(), 3);
         }
     }
