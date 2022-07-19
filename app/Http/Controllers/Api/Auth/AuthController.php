@@ -7,6 +7,7 @@ use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -28,5 +29,11 @@ class AuthController extends Controller
         $token = $user->createToken($request->device_name)->plainTextToken;
 
         return response()->Json(['token' => $token]);
+    }
+
+    public function logout()
+    {
+        $user = Auth::user();
+        $user->tokens()->delete();
     }
 }

@@ -8,19 +8,21 @@ use App\Http\Controllers\Api\{
     SupportController
 };
 use App\Http\Controllers\Api\Auth\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function() {
-    return response()->json(['success' => true]);
-});
-
-Route::get('/courses', [CourseController::class, 'index']);
-Route::get('/courses/{id}', [CourseController::class, 'show']);
-Route::get('/courses/{id}/module', [ModuleController::class, 'index']);
-Route::get('/modules/{id}/lessons', [LessonController::class, 'index']);
-Route::get('/lessons/{id}', [LessonController::class, 'show']);
-Route::get('/supports', [SupportController::class, 'index']);
-Route::post('/supports', [SupportController::class, 'store']);
-Route::post('/supports/replies', [ReplySupportController::class, 'store']);
+Route::get('/login', function() {
+    return response()->json(['error' => 'Unauthorized'], 400);
+})->name('login');
 Route::post('/login', [AuthController::class, 'auth']);
+
+Route::middleware(['auth:sanctum'])->group(function() {
+    Route::get('/courses', [CourseController::class, 'index']);
+    Route::get('/courses/{id}', [CourseController::class, 'show']);
+    Route::get('/courses/{id}/module', [ModuleController::class, 'index']);
+    Route::get('/modules/{id}/lessons', [LessonController::class, 'index']);
+    Route::get('/lessons/{id}', [LessonController::class, 'show']);
+    Route::get('/supports', [SupportController::class, 'index']);
+    Route::post('/supports', [SupportController::class, 'store']);
+    Route::post('/supports/replies', [ReplySupportController::class, 'store']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});

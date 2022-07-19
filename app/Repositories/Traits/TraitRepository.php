@@ -2,12 +2,12 @@
 
 namespace App\Repositories\Traits;
 
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 trait TraitRepository
 {
     public function getAuthUser()
     {
-        return User::first();
+        return Auth::user();
     }
 }
