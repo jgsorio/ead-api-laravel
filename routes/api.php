@@ -24,6 +24,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/courses/{id}/module', [ModuleController::class, 'index']);
     Route::get('/modules/{id}/lessons', [LessonController::class, 'index']);
     Route::get('/lessons/{id}', [LessonController::class, 'show']);
+    Route::get('/lesson/viewed', [LessonController::class, 'checkLessonViewed']);
     Route::get('/supports', [SupportController::class, 'index']);
     Route::post('/supports', [SupportController::class, 'store']);
     Route::post('/supports/replies', [ReplySupportController::class, 'store']);
