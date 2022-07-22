@@ -8,12 +8,15 @@ use App\Http\Controllers\Api\{
     SupportController
 };
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', function() {
     return response()->json(['error' => 'Unauthorized'], 400);
 })->name('login');
 Route::post('/login', [AuthController::class, 'auth']);
+Route::post('/forgot/password', [ResetPasswordController::class, 'sendResetLink']);
+Route::post('/reset/password', [ResetPasswordController::class, 'resetPassword']);
 
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/courses', [CourseController::class, 'index']);
